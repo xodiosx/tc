@@ -609,29 +609,15 @@ chmod 1777 tmp
     G.updateText.value = AppLocalizations.of(G.homePageStateContext)!.installingBootPackage;
     await setupBootstrap();
     
- //   G.updateText.value = AppLocalizations.of(G.homePageStateContext)!.copyingContainerSystem;
+    G.updateText.value = AppLocalizations.of(G.homePageStateContext)!.copyingContainerSystem;
     //存放容器的文件夹0和存放硬链接的文件夹.l2s
- //   Util.createDirFromString("${G.dataPath}/containers/0/.l2s");
+    Util.createDirFromString("${G.dataPath}/containers/0/.l2s");
     //这个是容器rootfs，被split命令分成了xa*，放在assets里
     //首次启动，就用这个，别让用户另选了
- //   for (String name in jsonDecode(await rootBundle.loadString('AssetManifest.json')).keys.where((String e) => e.startsWith("assets/xa")).map((String e) => e.split("/").last).toList()) {
-   //   await Util.copyAsset("assets/$name", "${G.dataPath}/$name");
-  //  }
+    for (String name in jsonDecode(await rootBundle.loadString('AssetManifest.json')).keys.where((String e) => e.startsWith("assets/xa")).map((String e) => e.split("/").last).toList()) {
+      await Util.copyAsset("assets/$name", "${G.dataPath}/$name");
+    }
     //-J
-
-G.updateText.value = AppLocalizations.of(G.homePageStateContext)!.copyingContainerSystem;
-//存放容器的文件夹0和存放硬链接的文件夹.l2s
-Util.createDirFromString("${G.dataPath}/containers/0/.l2s");
-//这个是容器rootfs，被split命令分成了xa*，放在assets里
-//首次启动，就用这个，别让用户另选了
-
-// Hardcoded list of split container files
-List<String> xaFiles = ['xaa', 'xab', 'xac', 'xad', 'xae', 'xaf', 'xag', 'xah', 'xai', 'xaj'];
-
-for (String name in xaFiles) {
-  await Util.copyAsset("assets/$name", "${G.dataPath}/$name");
-}
-
     G.updateText.value = AppLocalizations.of(G.homePageStateContext)!.installingContainerSystem;
     await Util.execute(
 """
